@@ -1,0 +1,74 @@
+{
+  "session": [
+    {
+      "role": "user",
+      "text": "Hi, What is the whether update in bangalore today"
+    },
+    {
+      "role": "assistant",
+      "text": "I'm sorry, but I don't have real-time weather data access. For the most accurate and up-to-date information on weather conditions in Bangalore today, please check a reliable weather forecasting website or app."
+    },
+    {
+      "role": "user",
+      "text": "hello",
+      "createdAt": "2026-06-10T09:30:04.883Z"
+    },
+    {
+      "role": "assistant",
+      "text": "Hello! How can I assist you today?",
+      "createdAt": "2026-06-10T09:30:16.127Z"
+    },
+    {
+      "role": "user",
+      "text": "hello",
+      "createdAt": "2026-06-10T09:30:40.263Z"
+    },
+    {
+      "role": "assistant",
+      "text": "Hello! How can I help you today?",
+      "createdAt": "2026-06-10T09:30:43.482Z"
+    },
+    {
+      "role": "user",
+      "text": "Hi",
+      "createdAt": "2026-06-10T09:32:35.727Z"
+    },
+    {
+      "role": "assistant",
+      "text": "Hello! How can I assist you today?",
+      "createdAt": "2026-06-10T09:33:07.662Z"
+    },
+    {
+      "role": "user",
+      "text": "How are you?",
+      "createdAt": "2026-06-10T09:33:17.242Z"
+    },
+    {
+      "role": "assistant",
+      "text": "I'm just a computer program, so I don't have feelings. How can I help you?",
+      "createdAt": "2026-06-10T09:33:27.255Z"
+    },
+    {
+      "role": "user",
+      "text": "My name is Rakesh, would you remember my name?",
+      "createdAt": "2026-06-10T09:48:38.528Z"
+    },
+    {
+      "role": "user",
+      "text": "Hi",
+      "createdAt": "2026-06-11T08:03:47.571Z"
+    },
+    {
+      "role": "assistant",
+      "text": "Hello! How can I assist you today?",
+      "createdAt": "2026-06-11T08:04:39.695Z"
+    }
+  ],
+  "memory": [
+    {
+      "id": "1781084918532-20hzwrqp",
+      "text": "my name?",
+      "createdAt": "2026-06-10T09:48:38.533Z"
+    }
+  ]
+}

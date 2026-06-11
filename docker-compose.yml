@@ -1,0 +1,47 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama-brain
+    restart: always
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./ollama-data:/root/.ollama
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h # Keep model in RAM for faster response
+      - OLLAMA_NUM_PARALLEL=2 # Good for i5 multitasking
+    healthcheck:
+      test: ["CMD-SHELL", "timeout 1 bash -c 'cat < /dev/null > /dev/tcp/127.0.0.1/11434' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # This sidecar container automatically pulls your coding model on startup
+  model-loader:
+    image: curlimages/curl:latest
+    container_name: model-loader
+    depends_on:
+      ollama:
+        condition: service_healthy
+    entrypoint: [ "curl", "-X", "POST", "http://ollama:11434/api/pull", "-d", "{\"name\": \"qwen2.5-coder:7b\"}" ]
+
+  assistant:
+    build:
+      context: ./assistant
+      dockerfile: Dockerfile
+    container_name: chat-assistant
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      - OLLAMA_URL=http://ollama:11434
+      - MODEL=qwen2.5-coder:7b
+      - SESSION_FILE=/data/memory.json
+    working_dir: /usr/src/app
+    command: sh -c "npm install --production && node server.js"
+    volumes:
+      - ./assistant:/usr/src/app
+      - ./assistant/data:/data

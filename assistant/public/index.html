@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Local AI Assistant</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header>
+      <div>
+        <h1>Local AI Assistant</h1>
+        <p class="subtitle">Use the chat box below to talk with your local model.</p>
+      </div>
+      <button id="clearButton">Clear history</button>
+    </header>
+
+    <div id="statusBar" class="status hidden">
+      <span class="spinner"></span>
+      <span id="statusText">Assistant is typing…</span>
+    </div>
+
+    <main id="chatContainer"></main>
+
+    <form id="chatForm">
+      <textarea id="promptInput" rows="3" placeholder="Type your message..."></textarea>
+      <button id="sendButton" type="submit">Send</button>
+    </form>
+
+    <footer>
+      <p>Model: <strong>qwen2.5-coder:7b</strong></p>
+    </footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
