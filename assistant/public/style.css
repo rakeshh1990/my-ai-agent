@@ -110,7 +110,7 @@ button:hover {
 }
 
 .status.hidden {
-  display: none;
+  display: none !important;
 }
 
 .spinner {
