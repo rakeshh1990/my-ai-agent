@@ -44,7 +44,7 @@ jobs:
           IMAGE_PREFIX="rakeshh1990/my-ai-agent"
           
           # Update values.yaml
-          sed -i "s|repository: ghcr.io.*assistant|repository: $REGISTRY/$IMAGE_PREFIX/assistant|g" helm/values.yaml
+          sed -i "s|repository: ghcr.io.*assistant|repository: $REGISTRY/$IMAGE_PREFIX|g" helm/values.yaml
           sed -i "s|tag: .*|tag: ${{ steps.image-tag.outputs.tag }}|g" helm/values.yaml
           
           echo "Updated helm/values.yaml:"
