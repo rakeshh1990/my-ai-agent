@@ -30,25 +30,24 @@ jobs:
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             TAG="${{ github.event.inputs.image_tag }}"
           else
-            TAG="${{ github.event.workflow_run.head_sha }}"
-            TAG="${TAG:0:7}"  # Short SHA
+            SHA="${{ github.event.workflow_run.head_sha }}"
+            BRANCH="${{ github.event.workflow_run.head_branch }}"
+            TAG="${BRANCH}-${SHA:0:7}"
           fi
           echo "tag=$TAG" >> $GITHUB_OUTPUT
 
       - name: Update Helm values
         run: |
           cd gitops
-          
-          # Determine registry and image
           REGISTRY="ghcr.io"
           IMAGE_PREFIX="rakeshh1990/my-ai-agent"
-          
-          # Update values.yaml
-          sed -i "s|repository: ghcr.io.*assistant|repository: $REGISTRY/$IMAGE_PREFIX|g" helm/values.yaml
-          sed -i "s|tag: .*|tag: ${{ steps.image-tag.outputs.tag }}|g" helm/values.yaml
-          
+
+          # Only touch the assistant block - leave ollama untouched
+          yq -i '.assistant.image.repository = "'"$REGISTRY/$IMAGE_PREFIX"'"' helm/values.yaml
+          yq -i '.assistant.image.tag = "'"${{ steps.image-tag.outputs.tag }}"'"' helm/values.yaml
+
           echo "Updated helm/values.yaml:"
-          grep -A 3 "assistant:" helm/values.yaml | head -5
+          yq '.assistant.image' helm/values.yaml
 
       - name: Create Pull Request
         id: create-pr
@@ -67,7 +66,7 @@ jobs:
             
             ### Changes
             - Updated `helm/values.yaml` with new image tag
-            - Image will be pulled from `ghcr.io/${{ github.repository }}/assistant:${{ steps.image-tag.outputs.tag }}`
+            - Image will be pulled from `ghcr.io/${{ github.repository }}:${{ steps.image-tag.outputs.tag }}`
             
             ### Next Steps
             1. Review the changes
