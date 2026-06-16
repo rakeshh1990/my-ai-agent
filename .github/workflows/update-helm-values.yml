@@ -41,13 +41,14 @@ jobs:
           cd gitops
           REGISTRY="ghcr.io"
           IMAGE_PREFIX="rakeshh1990/my-ai-agent"
+          VALUES_FILE=values/ai-agent-assistant.yaml
 
           # Only touch the assistant block - leave ollama untouched
-          yq -i '.assistant.image.repository = "'"$REGISTRY/$IMAGE_PREFIX"'"' helm/values.yaml
-          yq -i '.assistant.image.tag = "'"${{ steps.image-tag.outputs.tag }}"'"' helm/values.yaml
+          yq -i '.workload.image.repository = "'"$REGISTRY/$IMAGE_PREFIX"'"' "$VALUES_FILE"
+          yq -i '.workload.image.tag = "'"${{ steps.image-tag.outputs.tag }}"'"' "$VALUES_FILE"
 
-          echo "Updated helm/values.yaml:"
-          yq '.assistant.image' helm/values.yaml
+          echo "Updated "$VALUES_FILE":"
+          yq '.assistant.image' "$VALUES_FILE"
 
       - name: Create Pull Request
         id: create-pr
