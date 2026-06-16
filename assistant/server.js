@@ -11,7 +11,7 @@ const MEMORY_PATH = process.env.SESSION_FILE || path.join(__dirname, 'data', 'me
 const SYSTEM_PROMPT = `You are a helpful AI assistant. Answer clearly and briefly unless the user asks otherwise.`;
 const MAX_HISTORY_TURNS = 8;
 const MAX_MEMORY_ITEMS = 5;
-const FETCH_TIMEOUT_MS = 60000;
+const FETCH_TIMEOUT_MS = 180000;
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
